@@ -9,12 +9,10 @@ use FriendsOfTYPO3\Widgets\Widgets\StatusReportWidget;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 return function (ContainerConfigurator $configurator, ContainerBuilder $containerBuilder) {
     $services = $configurator->services();
 
-    if (ExtensionManagementUtility::isLoaded('reports')) {
         $services->set('widgets.dashboard.widget.statusReport')
             ->class(StatusReportWidget::class)
             ->arg('$view', new Reference('dashboard.views.widget'))
@@ -32,9 +30,7 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
                 ]
             )
         ;
-    }
 
-    if (ExtensionManagementUtility::isLoaded('seo')) {
         $services->set('widgets.dashboard.widget.pagesWithoutMetaDescription')
             ->class(PageOverviewWidget::class)
             ->arg('$dataProvider', new Reference('FriendsOfTYPO3\Widgets\Widgets\Provider\PagesWithoutDescriptionDataProvider'))
@@ -54,5 +50,4 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
                 ]
             )
         ;
-    }
 };
